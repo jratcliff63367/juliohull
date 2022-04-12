@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+/app/CMakeFiles/3.22.0-rc1
+/app/CMakeCache.txt
+/app/CMakeFiles/8a7a9cc8ac8164623bfcb5b632e24216/generate.stamp.rule
+/app/CMakeFiles/CMakeOutput.log
+/app/CMakeFiles/TargetDirectories.txt
+/app/CMakeFiles/cmake.check_cache
+/app/CMakeFiles/generate.stamp
+/app/CMakeFiles/generate.stamp.depend
+/app/CMakeFiles/generate.stamp.list
+/app/cmake_install.cmake
