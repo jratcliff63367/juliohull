@@ -40,3 +40,9 @@
 /app/CMakeFiles/generate.stamp.depend
 /app/CMakeFiles/generate.stamp.list
 /app/cmake_install.cmake
+/app/.vs/TestHull/v16
+/app/Debug
+/app/TestHull.dir/Debug
+/app/TestHull.dir/Release
+/app/x64/Debug/ZERO_CHECK
+/app/x64/Release/ZERO_CHECK
