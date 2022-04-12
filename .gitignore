@@ -27,7 +27,6 @@
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
 /app/CMakeFiles/3.22.0-rc1
@@ -46,3 +45,5 @@
 /app/TestHull.dir/Release
 /app/x64/Debug/ZERO_CHECK
 /app/x64/Release/ZERO_CHECK
+/*.bak
+/app/Release
