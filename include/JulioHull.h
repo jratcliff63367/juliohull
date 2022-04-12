@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2011 Khaled Mamou (kmamou at gmail dot com)
+﻿/* Copyright (c) 2022 Julio Jerez (jerezjulio0@gmail.com)
  All rights reserved.
  
  
@@ -13,7 +13,24 @@
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #pragma once
+
 #include <stdint.h>
+
+// JulioHull was written by <jerezjulio0@gmail.com>
+//
+// Julio is best known for creating the Newton Physics Engine : http://newtondynamics.com/forum/newton.php
+//
+// This code was packaged up in this form by John W. Ratcliff (jratcliffscarab@gmail.com)
+//
+// JulioHull is extremely fast, robust, and has high numerical precision.
+//
+// JulioHull is delivered as a header file only library
+//
+// Here is how you use it:
+//
+// In one of your CPP files add the line: #define ENABLE_JULIO_HULL_IMPLEMENTATION 1
+//
+// and then include "JulioHull.h"
 
 // Prototype for the JulioHull class
 namespace juliohull
