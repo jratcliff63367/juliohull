@@ -136,12 +136,12 @@ namespace nd
 		public:
 			T& operator[](size_t i) { return m_data[i]; }
 			const T& operator[](size_t i) const { return m_data[i]; }
-			T& X();
-			T& Y();
-			T& Z();
-			const T& X() const;
-			const T& Y() const;
-			const T& Z() const;
+			T& getX();
+			T& getY();
+			T& getZ();
+			const T& getX() const;
+			const T& getY() const;
+			const T& getZ() const;
 			void Normalize();
 			T GetNorm() const;
 			void operator=(const Vect3& rhs);
@@ -169,12 +169,12 @@ namespace nd
 			// Compute the center of this bounding box and return the diagonal length
 			T GetCenter(const Vect3 &bmin, const Vect3 &bmax)
 			{
-				X() = (bmin.X() + bmax.X())*0.5;
-				Y() = (bmin.Y() + bmax.Y())*0.5;
-				Z() = (bmin.Z() + bmax.Z())*0.5;
-				T dx = bmax.X() - bmin.X();
-				T dy = bmax.Y() - bmin.Y();
-				T dz = bmax.Z() - bmin.Z();
+				getX() = (bmin.getX() + bmax.getX())*0.5;
+				getY() = (bmin.getY() + bmax.getY())*0.5;
+				getZ() = (bmin.getZ() + bmax.getZ())*0.5;
+				T dx = bmax.getX() - bmin.getX();
+				T dy = bmax.getY() - bmin.getY();
+				T dz = bmax.getZ() - bmin.getZ();
 				T diagonal = T(sqrt(dx*dx + dy*dy + dz*dz));
 				return diagonal;
 			}
@@ -182,42 +182,42 @@ namespace nd
 			// Update the min/max values relative to this point
 			void UpdateMinMax(Vect3 &bmin, Vect3 &bmax) const
 			{
-				if (X() < bmin.X())
+				if (getX() < bmin.getX())
 				{
-					bmin.X() = X();
+					bmin.getX() = getX();
 				}
-				if (Y() < bmin.Y())
+				if (getY() < bmin.getY())
 				{
-					bmin.Y() = Y();
+					bmin.getY() = getY();
 				}
-				if (Z() < bmin.Z())
+				if (getZ() < bmin.getZ())
 				{
-					bmin.Z() = Z();
+					bmin.getZ() = getZ();
 				}
-				if (X() > bmax.X())
+				if (getX() > bmax.getX())
 				{
-					bmax.X() = X();
+					bmax.getX() = getX();
 				}
-				if (X() > bmax.X())
+				if (getX() > bmax.getX())
 				{
-					bmax.X() = X();
+					bmax.getX() = getX();
 				}
-				if (Y() > bmax.Y())
+				if (getY() > bmax.getY())
 				{
-					bmax.Y() = Y();
+					bmax.getY() = getY();
 				}
-				if (Z() > bmax.Z())
+				if (getZ() > bmax.getZ())
 				{
-					bmax.Z() = Z();
+					bmax.getZ() = getZ();
 				}
 			}
 
 			// Returns the squared distance between these two points
 			T GetDistanceSquared(const Vect3 &p) const
 			{
-				T dx = X() - p.X();
-				T dy = Y() - p.Y();
-				T dz = Z() - p.Z();
+				T dx = getX() - p.getX();
+				T dy = getY() - p.getY();
+				T dz = getZ() - p.getZ();
 				return dx*dx + dy*dy + dz*dz;
 			}
 
@@ -240,10 +240,10 @@ namespace nd
 		public:
 			T& operator[](size_t i) { return m_data[i]; }
 			const T& operator[](size_t i) const { return m_data[i]; }
-			T& X();
-			T& Y();
-			const T& X() const;
-			const T& Y() const;
+			T& getX();
+			T& getY();
+			const T& getX() const;
+			const T& getY() const;
 			void Normalize();
 			T GetNorm() const;
 			void operator=(const Vec2& rhs);
@@ -284,35 +284,35 @@ namespace nd
 		template <typename T>
 		inline Vect3<T> operator*(T lhs, const Vect3<T> & rhs)
 		{
-			return Vect3<T>(lhs * rhs.X(), lhs * rhs.Y(), lhs * rhs.Z());
+			return Vect3<T>(lhs * rhs.getX(), lhs * rhs.getY(), lhs * rhs.getZ());
 		}
 		template <typename T>
-		inline T & Vect3<T>::X()
+		inline T & Vect3<T>::getX()
 		{
 			return m_data[0];
 		}
 		template <typename T>
-		inline  T &    Vect3<T>::Y()
+		inline  T &    Vect3<T>::getY()
 		{
 			return m_data[1];
 		}
 		template <typename T>
-		inline  T &    Vect3<T>::Z()
+		inline  T &    Vect3<T>::getZ()
 		{
 			return m_data[2];
 		}
 		template <typename T>
-		inline  const T & Vect3<T>::X() const
+		inline  const T & Vect3<T>::getX() const
 		{
 			return m_data[0];
 		}
 		template <typename T>
-		inline  const T & Vect3<T>::Y() const
+		inline  const T & Vect3<T>::getY() const
 		{
 			return m_data[1];
 		}
 		template <typename T>
-		inline  const T & Vect3<T>::Z() const
+		inline  const T & Vect3<T>::getZ() const
 		{
 			return m_data[2];
 		}
@@ -442,9 +442,9 @@ namespace nd
 		template<typename T>
 		inline const bool Colinear(const Vect3<T> & a, const Vect3<T> & b, const Vect3<T> & c)
 		{
-			return  ((c.Z() - a.Z()) * (b.Y() - a.Y()) - (b.Z() - a.Z()) * (c.Y() - a.Y()) == 0.0 /*EPS*/) &&
-				((b.Z() - a.Z()) * (c.X() - a.X()) - (b.X() - a.X()) * (c.Z() - a.Z()) == 0.0 /*EPS*/) &&
-				((b.X() - a.X()) * (c.Y() - a.Y()) - (b.Y() - a.Y()) * (c.X() - a.X()) == 0.0 /*EPS*/);
+			return  ((c.getZ() - a.getZ()) * (b.getY() - a.getY()) - (b.getZ() - a.getZ()) * (c.getY() - a.getY()) == 0.0 /*EPS*/) &&
+				((b.getZ() - a.getZ()) * (c.getX() - a.getX()) - (b.getX() - a.getX()) * (c.getZ() - a.getZ()) == 0.0 /*EPS*/) &&
+				((b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX()) == 0.0 /*EPS*/);
 		}
 
 		template<typename T>
@@ -456,51 +456,51 @@ namespace nd
 		template <typename T>
 		inline bool Vect3<T>::operator<(const Vect3 & rhs) const
 		{
-			if (X() == rhs[0])
+			if (getX() == rhs[0])
 			{
-				if (Y() == rhs[1])
+				if (getY() == rhs[1])
 				{
-					return (Z() < rhs[2]);
+					return (getZ() < rhs[2]);
 				}
-				return (Y() < rhs[1]);
+				return (getY() < rhs[1]);
 			}
-			return (X() < rhs[0]);
+			return (getX() < rhs[0]);
 		}
 		template <typename T>
 		inline  bool Vect3<T>::operator>(const Vect3 & rhs) const
 		{
-			if (X() == rhs[0])
+			if (getX() == rhs[0])
 			{
-				if (Y() == rhs[1])
+				if (getY() == rhs[1])
 				{
-					return (Z() > rhs[2]);
+					return (getZ() > rhs[2]);
 				}
-				return (Y() > rhs[1]);
+				return (getY() > rhs[1]);
 			}
-			return (X() > rhs[0]);
+			return (getX() > rhs[0]);
 		}
 		template <typename T>
 		inline Vec2<T> operator*(T lhs, const Vec2<T> & rhs)
 		{
-			return Vec2<T>(lhs * rhs.X(), lhs * rhs.Y());
+			return Vec2<T>(lhs * rhs.getX(), lhs * rhs.getY());
 		}
 		template <typename T>
-		inline T & Vec2<T>::X()
+		inline T & Vec2<T>::getX()
 		{
 			return m_data[0];
 		}
 		template <typename T>
-		inline  T &    Vec2<T>::Y()
+		inline  T &    Vec2<T>::getY()
 		{
 			return m_data[1];
 		}
 		template <typename T>
-		inline  const T & Vec2<T>::X() const
+		inline  const T & Vec2<T>::getX() const
 		{
 			return m_data[0];
 		}
 		template <typename T>
-		inline  const T & Vec2<T>::Y() const
+		inline  const T & Vec2<T>::getY() const
 		{
 			return m_data[1];
 		}
@@ -625,12 +625,12 @@ namespace nd
 		{
 			T ax, ay, bx, by, cx, cy, apx, apy, bpx, bpy, cpx, cpy;
 			T cCROSSap, bCROSScp, aCROSSbp;
-			ax = c.X() - b.X();  ay = c.Y() - b.Y();
-			bx = a.X() - c.X();  by = a.Y() - c.Y();
-			cx = b.X() - a.X();  cy = b.Y() - a.Y();
-			apx = p.X() - a.X();  apy = p.Y() - a.Y();
-			bpx = p.X() - b.X();  bpy = p.Y() - b.Y();
-			cpx = p.X() - c.X();  cpy = p.Y() - c.Y();
+			ax = c.getX() - b.getX();  ay = c.getY() - b.getY();
+			bx = a.getX() - c.getX();  by = a.getY() - c.getY();
+			cx = b.getX() - a.getX();  cy = b.getY() - a.getY();
+			apx = p.getX() - a.getX();  apy = p.getY() - a.getY();
+			bpx = p.getX() - b.getX();  bpy = p.getY() - b.getY();
+			cpx = p.getX() - c.getX();  cpy = p.getY() - c.getY();
 			aCROSSbp = ax*bpy - ay*bpx;
 			cCROSSap = cx*apy - cy*apx;
 			bCROSScp = bx*cpy - by*cpx;
@@ -915,7 +915,7 @@ namespace nd
 			}
 
 			hullVector(const hullVector& x)
-				:Vect3<double>(x.X(), x.Y(), x.Z())
+				:Vect3<double>(x.getX(), x.getY(), x.getZ())
 			{
 			}
 
@@ -927,54 +927,54 @@ namespace nd
 			hullVector GetMin(const hullVector& p) const
 			{
 				return hullVector(
-					X() < p.X() ? X() : p.X(),
-					Y() < p.Y() ? Y() : p.Y(),
-					Z() < p.Z() ? Z() : p.Z(), 0.0);
+					getX() < p.getX() ? getX() : p.getX(),
+					getY() < p.getY() ? getY() : p.getY(),
+					getZ() < p.getZ() ? getZ() : p.getZ(), 0.0);
 			}
 
 			hullVector GetMax(const hullVector& p) const
 			{
 				return hullVector(
-					X() > p.X() ? X() : p.X(),
-					Y() > p.Y() ? Y() : p.Y(),
-					Z() > p.Z() ? Z() : p.Z(), 0.0);
+					getX() > p.getX() ? getX() : p.getX(),
+					getY() > p.getY() ? getY() : p.getY(),
+					getZ() > p.getZ() ? getZ() : p.getZ(), 0.0);
 			}
 
 			hullVector Scale(double s) const
 			{
-				return hullVector(X() * s, Y() * s, Z() * s, 0.0);
+				return hullVector(getX() * s, getY() * s, getZ() * s, 0.0);
 			}
 
 			inline hullVector operator+(const hullVector & rhs) const
 			{
-				return hullVector(X() + rhs.X(), Y() + rhs.Y(), Z() + rhs.Z(), 0.0f);
+				return hullVector(getX() + rhs.getX(), getY() + rhs.getY(), getZ() + rhs.getZ(), 0.0f);
 			}
 
 			inline hullVector operator-(const hullVector & rhs) const
 			{
-				return hullVector(X() - rhs.X(), Y() - rhs.Y(), Z() - rhs.Z(), 0.0f);
+				return hullVector(getX() - rhs.getX(), getY() - rhs.getY(), getZ() - rhs.getZ(), 0.0f);
 			}
 
 			inline hullVector operator*(const hullVector & rhs) const
 			{
-				return hullVector(X() * rhs.X(), Y() * rhs.Y(), Z() * rhs.Z(), 0.0f);
+				return hullVector(getX() * rhs.getX(), getY() * rhs.getY(), getZ() * rhs.getZ(), 0.0f);
 			}
 
 			inline double DotProduct(const hullVector & rhs) const
 			{
-				return X() * rhs.X() + Y() * rhs.Y() + Z() * rhs.Z();
+				return getX() * rhs.getX() + getY() * rhs.getY() + getZ() * rhs.getZ();
 			}
 
 			inline hullVector CrossProduct(const hullVector & rhs) const
 			{
-				return hullVector(Y() * rhs.Z() - Z() * rhs.Y(), Z() * rhs.X() - X() * rhs.Z(), X() * rhs.Y() - Y() * rhs.X(), 0.0);
+				return hullVector(getY() * rhs.getZ() - getZ() * rhs.getY(), getZ() * rhs.getX() - getX() * rhs.getZ(), getX() * rhs.getY() - getY() * rhs.getX(), 0.0);
 			}
 
 			inline hullVector operator= (const Vect3 & rhs)
 			{
-				X() = rhs.X();
-				Y() = rhs.Y();
-				Z() = rhs.Z();
+				getX() = rhs.getX();
+				getY() = rhs.getY();
+				getZ() = rhs.getZ();
 				return *this;
 			}
 		};
@@ -996,21 +996,21 @@ namespace nd
 
 			hullPlane Scale(double s) const
 			{
-				return hullPlane(X() * s, Y() * s, Z() * s, m_w * s);
+				return hullPlane(getX() * s, getY() * s, getZ() * s, m_w * s);
 			}
 
 			inline hullPlane operator= (const hullPlane &rhs)
 			{
-				X() = rhs.X();
-				Y() = rhs.Y();
-				Z() = rhs.Z();
+				getX() = rhs.getX();
+				getY() = rhs.getY();
+				getZ() = rhs.getZ();
 				m_w = rhs.m_w;
 				return *this;
 			}
 
 			inline hullVector operator*(const hullVector & rhs) const
 			{
-				return hullVector(X() * rhs.X(), Y() * rhs.Y(), Z() * rhs.Z(), 0.0f);
+				return hullVector(getX() * rhs.getX(), getY() * rhs.getY(), getZ() * rhs.getZ(), 0.0f);
 			}
 
 			double Evalue(const hullVector &point) const
@@ -2266,7 +2266,7 @@ namespace nd
 
 					const hullVector origin(cluster.m_sum.Scale(1.0f / cluster.m_count));
 					const hullVector variance2(cluster.m_sum2.Scale(1.0f / cluster.m_count) - origin * origin);
-					double maxVariance2 = Max(Max(variance2.X(), variance2.Y()), variance2.Z());
+					double maxVariance2 = Max(Max(variance2.getX(), variance2.getY()), variance2.getZ());
 
 					if ((cluster.m_count <= clusterSize) || (stack > (sizeof(spliteStack) / sizeof(spliteStack[0]) - 4)) || (maxVariance2 < 1.e-4f))
 					{
@@ -2276,10 +2276,10 @@ namespace nd
 						//double min_x = 1.0e20f;
 						//for (int i = 0; i < cluster.m_count; ++i)
 						//{
-						//	if (points[cluster.m_start + i].X() < min_x)
+						//	if (points[cluster.m_start + i].getX() < min_x)
 						//	{
 						//		maxIndex = i;
-						//		min_x = points[cluster.m_start + i].X();
+						//		min_x = points[cluster.m_start + i].getX();
 						//	}
 						//}
 						//Swap(points[cluster.m_start], points[cluster.m_start + maxIndex]);
@@ -2288,7 +2288,7 @@ namespace nd
 						//{
 						//	int j = i;
 						//	ConvexHullVertex tmp(points[cluster.m_start + i]);
-						//	for (; points[cluster.m_start + j - 1].X() > tmp.X(); --j)
+						//	for (; points[cluster.m_start + j - 1].getX() > tmp.getX(); --j)
 						//	{
 						//		assert(j > 0);
 						//		points[cluster.m_start + j] = points[cluster.m_start + j - 1];
@@ -2322,11 +2322,11 @@ namespace nd
 					else
 					{
 						int firstSortAxis = 0;
-						if ((variance2.Y() >= variance2.X()) && (variance2.Y() >= variance2.Z()))
+						if ((variance2.getY() >= variance2.getX()) && (variance2.getY() >= variance2.getZ()))
 						{
 							firstSortAxis = 1;
 						}
-						else if ((variance2.Z() >= variance2.X()) && (variance2.Z() >= variance2.Y()))
+						else if ((variance2.getZ() >= variance2.getX()) && (variance2.getZ() >= variance2.getY()))
 						{
 							firstSortAxis = 2;
 						}
@@ -2484,11 +2484,11 @@ namespace nd
 					const hullVector variance2(box.m_sum2.Scale(1.0f / box.m_count) - origin * origin);
 
 					int firstSortAxis = 0;
-					if ((variance2.Y() >= variance2.X()) && (variance2.Y() >= variance2.Z()))
+					if ((variance2.getY() >= variance2.getX()) && (variance2.getY() >= variance2.getZ()))
 					{
 						firstSortAxis = 1;
 					}
-					else if ((variance2.Z() >= variance2.X()) && (variance2.Z() >= variance2.Y()))
+					else if ((variance2.getZ() >= variance2.getX()) && (variance2.getZ() >= variance2.getY()))
 					{
 						firstSortAxis = 2;
 					}
@@ -2640,10 +2640,10 @@ namespace nd
 
 					if (me->m_left && me->m_right)
 					{
-						const hullVector leftSupportPoint(me->m_left->m_box[ix].X(), me->m_left->m_box[iy].Y(), me->m_left->m_box[iz].Z(), 0.0f);
+						const hullVector leftSupportPoint(me->m_left->m_box[ix].getX(), me->m_left->m_box[iy].getY(), me->m_left->m_box[iz].getZ(), 0.0f);
 						double leftSupportDist = leftSupportPoint.DotProduct(dir);
 
-						const hullVector rightSupportPoint(me->m_right->m_box[ix].X(), me->m_right->m_box[iy].Y(), me->m_right->m_box[iz].Z(), 0.0f);
+						const hullVector rightSupportPoint(me->m_right->m_box[ix].getX(), me->m_right->m_box[iy].getY(), me->m_right->m_box[iz].getZ(), 0.0f);
 						double rightSupportDist = rightSupportPoint.DotProduct(dir);
 
 						if (rightSupportDist >= leftSupportDist)
@@ -2675,12 +2675,12 @@ namespace nd
 						for (int i = 0; i < cluster->m_count; ++i)
 						{
 							const ConvexHullVertex& p = points[cluster->m_indices[i]];
-							assert(p.X() >= cluster->m_box[0].X());
-							assert(p.X() <= cluster->m_box[1].X());
-							assert(p.Y() >= cluster->m_box[0].Y());
-							assert(p.Y() <= cluster->m_box[1].Y());
-							assert(p.Z() >= cluster->m_box[0].Z());
-							assert(p.Z() <= cluster->m_box[1].Z());
+							assert(p.getX() >= cluster->m_box[0].getX());
+							assert(p.getX() <= cluster->m_box[1].getX());
+							assert(p.getY() >= cluster->m_box[0].getY());
+							assert(p.getY() <= cluster->m_box[1].getY());
+							assert(p.getZ() >= cluster->m_box[0].getZ());
+							assert(p.getZ() <= cluster->m_box[1].getZ());
 							if (!p.m_mark)
 							{
 								//assert(p.m_w == double(0.0f));
